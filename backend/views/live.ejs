@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hello World
+
+    <button id='inittwit'>Initialize Twitch Event Subscription</button>
+    <div id='notify'></div>
+
+    <script>
+        const queue = [];
+        let animationRunning = false;
+        const gif = document.createElement('img');
+        const notify = document.querySelector('#notify');
+        const message = document.createElement('span');
+
+        gif.setAttribute('src', 'https://giffiles.alphacoders.com/247/2479.gif');
+        gif.setAttribute('alt', 'bmo gif');
+        gif.setAttribute('id', 'gif')
+
+        const button = document.querySelector('#inittwit');
+        const events = new EventSource('/event/<%=id%>');
+        events.onmessage = event => {
+            const data = JSON.parse(event.data);
+            queue.push(data)
+        };
+
+        button.addEventListener('click',(e)=>{
+            fetch('/twitch/webhook/<%=id%>')
+            .then(data=>{
+                console.log(data)
+            })
+        })
+
+        const displayMessage = (data) => {
+            animationRunning = true;
+            message.innerText = `Thanks for the follow, ${data.event.user_name}!`;
+            notify.appendChild(gif);
+            notify.appendChild(message);
+            setTimeout(()=>{
+                gif.remove();
+                message.remove();
+                queue.shift();
+                animationRunning = false;
+            }, 5000)
+        }
+
+        const consume = () => setInterval(() => {
+            if(queue.length > 0){
+                if(!animationRunning){
+                    displayMessage(queue[0])
+                }
+            }
+        }, 1000);
+
+        consume();
+    </script>
+</body>
+</html>
