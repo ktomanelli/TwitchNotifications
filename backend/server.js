@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { urlencoded } = require('express');
 const {
   getClientToken,
@@ -9,12 +10,9 @@ const {
   getAppToken,
   getUserFromName,
 } = require('./auth');
-const {
-  initEventSub,
-  twitchEventSub,
-  listTwitchEventSub,
-  sendEvent,
-} = require('./controllers/eventController');
+const EventController = require('./controllers/eventController');
+const EventService = require('./services/EventService');
+const Cache = require('./cache');
 const Client = require('./models/Client');
 require('dotenv').config();
 
@@ -23,7 +21,10 @@ mongoose.connect(
 );
 const app = express();
 
-app.set('view engine', 'ejs');
+const cache = new Cache();
+const eventService = new EventService(cache);
+const eventController = new EventController(cache, eventService);
+app.use(cors())
 
 app.use(
   express.json({
@@ -32,40 +33,20 @@ app.use(
 );
 app.use(urlencoded({ extended: true }));
 
-// app.get('/live', (req, res) => {
-//   res.redirect(
-//     'https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=https://kylefrominternet.stream/auth&scope=user_read'
-//   );
-// });
-
-// app.get('/live/:id', (req, res) => {
-//   const { id } = req.params;
-//   if (id) {
-//     res.render('live.ejs', { id });
-//   } else {
-//     res.redirect('/live');
-//   }
-// });
-
 app.get('/event/:id', (req, res) => {
-  initEventSub(req, res);
+  console.log(req.params.id)
+  eventController.initEventSub(req, res);
 });
 
 app.post('/event/:id', (req, res) => {
-  const { id } = req.params;
-  if (id) {
-    sendEvent(id, req.body);
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(400);
-  }
+    eventController.sendEvent(req, res);
 });
 
 app.get('/twitch/webhook/list', async (req, res) => {
   try {
     const tokenResp = await getAppToken();
     const token = tokenResp.data.access_token;
-    const resp = await listTwitchEventSub(token);
+    const resp = await eventService.listTwitchEventSub(token);
     res.status(200).json(resp.data);
   } catch (e) {
     console.log(e);
@@ -82,16 +63,22 @@ app.get('/twitch/webhook/:id', async (req, res) => {
       const token = tokenResp.data.access_token;
       if (token) {
         console.log('sending twitch event sub');
-        await twitchEventSub(id, token);
+        await eventService.twitchEventSub(id, token);
         res.sendStatus(200);
       } else {
         throw new Error('Unable to initialize twitch event subscription');
       }
+    }else{
+      throw new Error('ID not specified');
     }
-    throw new Error('ID not specified');
   } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
+    if(e?.response.status===409){
+      res.sendStatus(409)
+      console.log('subscription already exists')
+    } else{
+      res.sendStatus(500);
+      console.log(e);
+    }
   }
 });
 
@@ -104,16 +91,16 @@ app.post('/twitch/webhook', (req, res) => {
   } else {
     const id = req.body.event.broadcaster_user_id;
     if (id) {
-      sendEvent(id, req.body);
+      eventService.sendEvent(id, req.body);
     }
     console.log(req.body);
     res.sendStatus(200);
   }
 });
 
-app.get('/auth', async (req, res) => {
+app.post('/auth', async (req, res) => {
   try {
-    const { code } = req.query;
+    const { code } = req.body;
     if (code) {
       try {
         const resp = await getClientToken(code);
@@ -123,12 +110,26 @@ app.get('/auth', async (req, res) => {
         const userResp = await getUserFromName(token, 'hasanabi');
         const user = userResp.data.data[0];
         const { id } = user;
+        const client = await new Promise((resolve,reject)=>{
+          Client.findByIdAndUpdate(id, { $set: { _id: id, user, data: resp.data }}, { upsert: true  }, (err,data)=>{
+            if(err){
+              console.log(err)
+              reject(err);
+            }else{
+              if(data){
+                resolve(data);
+              }else{
+                resolve({
+                  _id:id,
+                  user
+                })
+              }
+            }
+          })
 
-        // eslint-disable-next-line no-new
-        const client = new Client({ _id: id, user, data: resp.data });
-        client.save();
+        })
 
-        res.redirect(`/live/${id}`);
+        res.status(200).json({client})
       } catch (e) {
         console.log(e);
         throw new Error('error in getting token or userid from twitch');
@@ -141,9 +142,5 @@ app.get('/auth', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-// app.get('/', async (req, res) => {
-//   res.redirect('https://twitch.tv/kylefrominternet');
-// });
 
 app.listen(3000, () => console.log('listening on 3000'));

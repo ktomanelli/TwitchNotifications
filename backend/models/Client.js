@@ -1,21 +1,23 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { ObjectId } = Schema;
 
 const clientSchema = new Schema({
-  _id: ObjectId,
+  _id: String,
+
   user: {
     id: String,
     login: String,
     display_name: String,
-    type: String,
+    type: {
+      type: String
+    },
     broadcaster_type: String,
     description: String,
     profile_image_url: String,
     offline_image_url: String,
     view_count: Number,
-    created_at: Date,
+    created_at: String,
   },
   data: {
     access_token: String,
@@ -24,7 +26,15 @@ const clientSchema = new Schema({
     scope: [String],
     token_type: String,
   },
+},{
+  toJSON: {
+    transform: function(doc,ret){
+      delete ret.data
+    }
+  }
 });
+
+
 
 const Client = mongoose.model('client', clientSchema);
 

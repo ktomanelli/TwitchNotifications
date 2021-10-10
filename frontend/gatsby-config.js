@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
+    `gatsby-plugin-use-query-params`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
@@ -35,4 +36,8 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
+  proxy: {
+    prefix: '/api',
+    url: 'http://localhost:3000'
+  },
 }
