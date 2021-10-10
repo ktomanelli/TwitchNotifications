@@ -6,9 +6,9 @@ class EventService{
     }
 
     sendEvent = (id, type, data) => {
-        const res = this.cache.get(id);
-        if(res){
-            res.write(`data: ${JSON.stringify({type, data})}\n\n`);
+        const clients = this.cache.get(id);
+        if(clients){
+            clients.forEach(res=>res.write(`data: ${JSON.stringify({type, data})}\n\n`));
         }
     }
 

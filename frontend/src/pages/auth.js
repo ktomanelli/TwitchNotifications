@@ -20,11 +20,12 @@ const Auth = (props) => {
             .then((r)=>r.json())
             .then((data)=>{
                 const {client} = data
-                dispatch({type:'SET_CLIENT', payload:{client}})
+                dispatch({type:'SET_CLIENT', payload:{client}});
                 navigate('/tools');
             })
         }else{
-            window.location.replace('https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=https://kylefrominternet.stream/auth&scope=user_read');
+            let redirectPath = 'https://kylefrominternet.stream/auth'
+            window.location.replace(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=${redirectPath}&scope=user_read`);
         }
     },[code])
     

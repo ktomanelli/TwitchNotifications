@@ -9,7 +9,11 @@ class Cache{
         return null
     }
     new = (id, item) =>{
-        this.cache[id] = item
+        if(this.cache[id]){
+            this.cache[id].push(item);
+        }else{
+            this.cache[id] = [item];
+        }
     }
 }
 
