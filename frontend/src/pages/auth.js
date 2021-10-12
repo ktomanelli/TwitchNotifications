@@ -9,6 +9,7 @@ const Auth = (props) => {
 
     useEffect(()=>{
         if(code){
+            console.log('starting fetch')
             fetch('http://localhost:3000/auth',{
                 method:'POST',
                 headers:{
@@ -19,6 +20,7 @@ const Auth = (props) => {
             })
             .then((r)=>r.json())
             .then((data)=>{
+                console.log('completed fetch')
                 const {client} = data
                 dispatch({type:'SET_CLIENT', payload:{client}});
                 navigate('/tools');

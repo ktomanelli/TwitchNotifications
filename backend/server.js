@@ -33,8 +33,7 @@ app.use(
 );
 app.use(urlencoded({ extended: true }));
 
-app.get('/event/:id', (req, res) => {
-  console.log(req.params.id)
+app.get('/event/:id/:uuid', (req, res) => {
   eventController.initEventSub(req, res);
 });
 
@@ -93,7 +92,7 @@ app.post('/twitch/webhook', (req, res) => {
     if (id) {
       eventService.sendEvent(id, req.body);
     }
-    console.log(req.body);
+    console.log('received message from twitch');
     res.sendStatus(200);
   }
 });
