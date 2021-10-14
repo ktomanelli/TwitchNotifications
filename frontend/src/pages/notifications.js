@@ -8,8 +8,13 @@ import { useQueryParam, StringParam } from "use-query-params";
 
 const Notifications = () => {
     const [id, setId] = useQueryParam('id', StringParam);
+    const [imgSrc, setImgSrc] = useState('https://c.tenor.com/FYcn40o1ZYgAAAAi/zombie-bloody.gif');
+    const [imgAlt, setImgAlt] = useState('zombie gif');
+    const [audioSrc, setAudioSrc] = useState('https://www.myinstants.com/media/sounds/metalgearsolid.swf.mp3');
 
-
+    const generateUrl = () => {
+        return null;   
+    }
 
     const FlexDiv = styled.div`
     display: flex;
@@ -18,11 +23,35 @@ const Notifications = () => {
 
     return <>
         {id ? 
-            <NotificationWindow id={id}/>
+            <NotificationWindow
+                imgSrc={imgSrc} 
+                setImgSrc={setImgSrc}
+                imgAlt={imgAlt}
+                setImgAlt={setImgAlt}
+                audioSrc={audioSrc}
+                setAudioSrc={setAudioSrc}
+            />
         :
             <FlexDiv>
-                <NotificationSettings/>
-                <NotificationWindow/>
+                <NotificationSettings 
+                    imgSrc={imgSrc} 
+                    setImgSrc={setImgSrc}
+                    imgAlt={imgAlt}
+                    setImgAlt={setImgAlt}
+                    audioSrc={audioSrc}
+                    setAudioSrc={setAudioSrc}
+                />
+                <div>
+                    <button onClick={generateUrl}>Get OBS Browser Source URL</button>
+                    <NotificationWindow
+                        imgSrc={imgSrc} 
+                        setImgSrc={setImgSrc}
+                        imgAlt={imgAlt}
+                        setImgAlt={setImgAlt}
+                        audioSrc={audioSrc}
+                        setAudioSrc={setAudioSrc}
+                    />
+                </div>
             </FlexDiv>
         }
     </>

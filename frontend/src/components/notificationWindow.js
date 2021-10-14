@@ -8,25 +8,22 @@ const NotificationWindow = (props) => {
     const [subActive, setSubActive] = useState(false);
     const [queue,setQueue] = useState([]);
     const [message, setMessage] = useState('');
-    const [imgSrc, setImgSrc] = useState('https://c.tenor.com/FYcn40o1ZYgAAAAi/zombie-bloody.gif');
-    const [imgAlt, setImgAlt] = useState('zombie gif');
     const [audio, setAudio] = useState(null);
     const [audioPlaying, setAudioPlaying] = useState(false);
-    const [audioSrc, setAudioSrc] = useState('https://www.myinstants.com/media/sounds/metalgearsolid.swf.mp3');
     const [animationRunning, setAnimationRunning] = useState(false);
     const [events, setEvents] = useState(null);
     const state = useContext(GlobalStateContext)
 
     useEffect(() => {
-        if(state.client._id || props.id) {
-            const id = state.client._id ? state.client._id : props.id;
+        if(state.client._id) {
+            const id = state.client._id;
             if(!subActive) initTwitchSub(id);
         } else {
-            navigate('/auth/');
+            navigate('/auth', {state: {nextPath: '/notify'}});
         }
         return(()=>{
             if(events) events.close();
-            audio.removeEventListener('ended', () => audioPlaying(false));
+            if(audio) audio.removeEventListener('ended', () => audioPlaying(false));
         })
     },[])
 
@@ -39,12 +36,12 @@ const NotificationWindow = (props) => {
     },[queue, animationRunning])
 
     const initTwitchSub = (id) => {
-        fetch(`http://localhost:3000/twitch/webhook/${id}`)
+        fetch(`https://api.kylefrominternet.stream/twitch/webhook/${id}`)
         .then(data=>{
             if(data.status === 200 || data.status === 409){
                 setSubActive(true);
                 initSSE(id);
-                const htmlAudio = new Audio(audioSrc);
+                const htmlAudio = new Audio(props.audioSrc);
                 htmlAudio.addEventListener('ended', () => setAudioPlaying(false));
                 setAudio(htmlAudio);
             } else{
@@ -53,14 +50,22 @@ const NotificationWindow = (props) => {
         })
     }
 
-    const NotifyImg = styled.img``;
-    const NotifySpan = styled.span``;
+    const NotifyImg = styled.img`
+        width: 50vw;
+        height: 50vh;
+    `;
+    const NotifySpan = styled.span`
+        width:100vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3em;
+    `;
 
     const initSSE = (id) => {
-        console.log('sss',state.client)
         const uuid = uuidv4();
-        console.log(uuid);
-        const sse = new EventSource(`http://localhost:3000/event/${id}/${uuid}`);
+        const sse = new EventSource(`https://api.kylefrominternet.stream/event/${id}/${uuid}`);
         const maxReconnectTries = 3
         let reconnectAttempts = 0
 
@@ -111,7 +116,7 @@ const NotificationWindow = (props) => {
                     <>
                         {animationRunning ?
                             <div id='notify'>
-                                <NotifyImg src={imgSrc} alt={imgAlt}/>
+                                <NotifyImg src={props.imgSrc} alt={props.imgAlt}/>
                                 <NotifySpan>{message}</NotifySpan>
                             </div>
                         :

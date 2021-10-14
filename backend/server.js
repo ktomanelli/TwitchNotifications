@@ -38,8 +38,12 @@ app.get('/event/:id/:uuid', (req, res) => {
 });
 
 app.post('/event/:id', (req, res) => {
-    eventController.sendEvent(req, res);
-});
+  const id = req.body.event.broadcaster_user_id;
+  if (id) {
+    console.log(req.body)
+    eventService.sendEvent(id, req.body);
+    res.sendStatus(200)
+  }});
 
 app.get('/twitch/webhook/list', async (req, res) => {
   try {
@@ -90,6 +94,7 @@ app.post('/twitch/webhook', (req, res) => {
   } else {
     const id = req.body.event.broadcaster_user_id;
     if (id) {
+      console.log(req.body)
       eventService.sendEvent(id, req.body);
     }
     console.log('received message from twitch');
