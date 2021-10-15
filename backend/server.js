@@ -40,7 +40,6 @@ app.get('/event/:id/:uuid', (req, res) => {
 app.post('/event/:id', (req, res) => {
   const id = req.body.event.broadcaster_user_id;
   if (id) {
-    console.log(req.body)
     eventService.sendEvent(id, req.body);
     res.sendStatus(200)
   }});
@@ -57,6 +56,19 @@ app.get('/twitch/webhook/list', async (req, res) => {
   }
 });
 
+app.delete('/twitch/webhook', async (req, res) => {
+  try {
+    const {subId} = req.body;
+    const tokenResp = await getAppToken();
+    const token = tokenResp.data.access_token;
+    await eventService.deleteTwitchEventSub(token, subId);
+    res.sendStatus(200)
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 // init twitch event sub
 app.get('/twitch/webhook/:id', async (req, res) => {
   try {
@@ -66,8 +78,10 @@ app.get('/twitch/webhook/:id', async (req, res) => {
       const token = tokenResp.data.access_token;
       if (token) {
         console.log('sending twitch event sub');
-        await eventService.twitchEventSub(id, token);
-        res.sendStatus(200);
+        const twitchSub = await eventService.twitchEventSub(id, token);
+        const subid = twitchSub.data.data[0].id;
+        cache.new(id, subid);
+        res.status(200).json(twitchSub.data.data[0]);
       } else {
         throw new Error('Unable to initialize twitch event subscription');
       }
@@ -75,7 +89,7 @@ app.get('/twitch/webhook/:id', async (req, res) => {
       throw new Error('ID not specified');
     }
   } catch (e) {
-    if(e?.response.status===409){
+    if(e?.response?.status===409){
       res.sendStatus(409)
       console.log('subscription already exists')
     } else{
@@ -111,7 +125,7 @@ app.post('/auth', async (req, res) => {
         const { data } = resp;
         const token = data.access_token;
 
-        const userResp = await getUserFromName(token, 'hasanabi');
+        const userResp = await getUserFromName(token, 'kylefrominternet');
         const user = userResp.data.data[0];
         const { id } = user;
         const client = await new Promise((resolve,reject)=>{

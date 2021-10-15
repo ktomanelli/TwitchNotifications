@@ -19,14 +19,15 @@ class EventController {
       };
       res.writeHead(200, headers);
 
-      this.cache.new(id, uuid, res);
+      this.cache.addClient(id, uuid, res);
 
-      req.on('close', () => {
+      req.on('close', async () => {
         const {uuid} = req.params
-        const cache = this.cache.get(id);
-        const res = cache.find(i => i.uuid === uuid);
-        const index = cache.indexOf(res);
-        cache.splice(index,1);
+        const client = this.cache.get(id);
+        this.cache.closeClient(id, uuid)
+        if(client.clients.length === 0 ){
+          await this.eventService.deleteAllSubs(client.subscriptions);
+        }
       });
     } else {
       res.sendStatus(400);

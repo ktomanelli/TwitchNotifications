@@ -18,22 +18,8 @@ const clientSchema = new Schema({
     offline_image_url: String,
     view_count: Number,
     created_at: String,
-  },
-  data: {
-    access_token: String,
-    expires_in: Number,
-    refresh_token: String,
-    scope: [String],
-    token_type: String,
-  },
-},{
-  toJSON: {
-    transform: function(doc,ret){
-      delete ret.data
-    }
   }
 });
-
 
 
 const Client = mongoose.model('client', clientSchema);

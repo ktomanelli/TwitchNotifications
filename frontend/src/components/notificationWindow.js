@@ -39,6 +39,7 @@ const NotificationWindow = (props) => {
         fetch(`https://api.kylefrominternet.stream/twitch/webhook/${id}`)
         .then(data=>{
             if(data.status === 200 || data.status === 409){
+                console.log('resp',data.data)
                 setSubActive(true);
                 initSSE(id);
                 const htmlAudio = new Audio(props.audioSrc);

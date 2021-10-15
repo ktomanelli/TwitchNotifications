@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { getAppToken } = require('../auth');
 
 class EventService {
   constructor(cache) {
@@ -6,9 +7,11 @@ class EventService {
   }
 
   sendEvent = (id, type, data) => {
-    const clients = this.cache.get(id);
-    if (clients) {
-        clients.forEach(res =>
+
+    const client = this.cache.get(id);
+    // console.log(client)
+    if (client.clients) {
+        client.clients.forEach(res =>
             res.write(`data: ${JSON.stringify({type, data })}\n\n`));
     }
   };
@@ -20,6 +23,22 @@ class EventService {
         Authorization: `Bearer ${token}`,
       },
     });
+
+  deleteTwitchEventSub = (token, subId) =>
+  axios.delete(`https://api.twitch.tv/helix/eventsub/subscriptions?id=${subId}`, {
+    headers: {
+      'Client-ID': process.env.TWITCH_CLIENT_ID,
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  deleteAllSubs = async (subscriptions) => {
+    for(const id of subscriptions){
+      const tokenResp = await getAppToken();
+      const token = tokenResp.data.access_token;      
+      await this.deleteTwitchEventSub(token, id);
+    }
+  }
 
   twitchEventSub = (userId, token) =>
     axios.post(
