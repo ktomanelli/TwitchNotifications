@@ -52,16 +52,19 @@ const NotificationWindow = (props) => {
     }
 
     const NotifyImg = styled.img`
-        width: 50vw;
-        height: 50vh;
+        margin: auto;
+        position: relative;
+        width: 80vw;
+        height: 80vh;
     `;
     const NotifySpan = styled.span`
-        width:100vw;
+        font-family: "VintageOne";
+        width:100%;
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 3em;
+        bottom: 0;
+        left: 0;
+        font-size: 4em;
+        text-align: center;
     `;
 
     const initSSE = (id) => {

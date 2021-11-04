@@ -9,13 +9,15 @@ class Cache{
         return null
     }
 
-    new = (id, subId) => {
+    new = (id, subs) => {
+        let subscriptions = subs
+        if(!Array.isArray(subs)) subscriptions = [subs]
         if(this.cache[id]){
-            this.cache[id].subscriptions.push(subId);
+            this.cache[id].subscriptions.push(...subscriptions);
         }else{
             this.cache[id] = {
                 clients: [],
-                subscriptions: [subId]
+                subscriptions: [...subscriptions]
             }
         }
     }

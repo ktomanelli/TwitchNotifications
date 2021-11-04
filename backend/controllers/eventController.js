@@ -18,8 +18,14 @@ class EventController {
         'Cache-Control': 'no-cache',
       };
       res.writeHead(200, headers);
-
-      this.cache.addClient(id, uuid, res);
+      try{
+        this.cache.addClient(id, uuid, res);
+      } catch (e){
+        if(e.message==='invalid ID'){
+          await this.eventService.createNewEventEventSubInCache(id);
+          this.cache.addClient(id, uuid, res);
+        }
+      }
 
       req.on('close', async () => {
         const {uuid} = req.params

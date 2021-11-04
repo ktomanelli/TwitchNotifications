@@ -1,0 +1,9 @@
+@import "../css/typeography.css";
+
+#notify{
+    font-family: "BadlyStamped";
+}
+
+#notify span{
+    color: "#3ad0c3";
+}
