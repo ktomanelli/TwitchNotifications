@@ -1,0 +1,10 @@
+version: '3'
+services:
+  backend:
+    image: chat-server:staging
+    ports:
+      - "3000:3000"
+  frontend:
+    image: web-server:staging
+    ports:
+      - "9000:9000"
