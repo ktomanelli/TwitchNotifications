@@ -6,6 +6,8 @@ COPY package.json ./
 COPY *.js ./
 COPY src ./src/
 
+ENV GATSBY_FRONTEND_URL=https://kylefrominternet.herokuapp.com
+
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN npm -g install gatsby-cli
 RUN npm i
