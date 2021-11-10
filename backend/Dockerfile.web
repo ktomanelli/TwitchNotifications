@@ -1,8 +1,8 @@
 FROM node:14
 WORKDIR /app
 
-COPY package.json .
-
+COPY package.json ./
+COPY src ./
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN npm install
 
