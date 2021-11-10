@@ -69,7 +69,7 @@ const NotificationWindow = (props) => {
 
     const initSSE = (id) => {
         const uuid = uuidv4();
-        const sse = new EventSource(`https://api.kylefrominternet.stream/event/${id}/${uuid}`);
+        const sse = new EventSource(`${process.env.FRONTEND_URL}/api/event/${id}/${uuid}`);
         const maxReconnectTries = 3
         let reconnectAttempts = 0
 
