@@ -1,6 +1,6 @@
 setup:
   config:
-    GATSBY_FRONTEND_URL: $GATSBY_FRONTEND_URL
+    GATSBY_FRONTEND_URL: https://kylefrominternet.herokuapp.com
 build:
   docker:
     web: ./frontend/Dockerfile.web
