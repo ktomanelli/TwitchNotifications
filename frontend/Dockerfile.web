@@ -2,10 +2,10 @@ FROM node:14
 
 WORKDIR /app
 
-COPY package.json .
-COPY *.js .
-COPY public .
-COPY src .
+COPY package.json ./
+COPY *.js ./
+COPY public ./
+COPY src ./
 
 RUN npm -g install gatsby-cli
 RUN npm i
