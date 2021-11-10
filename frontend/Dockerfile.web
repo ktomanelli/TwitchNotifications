@@ -9,7 +9,7 @@ COPY src ./
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN npm -g install gatsby-cli
 RUN npm i
-RUN npm build
+RUN npm run build
 
 EXPOSE 9000
 
