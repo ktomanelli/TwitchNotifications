@@ -2,10 +2,10 @@ FROM node:14
 
 WORKDIR /app
 
-COPY frontend/package.json .
-COPY frontend/*.js .
-COPY frontend/public .
-COPY frontend/src .
+COPY package.json .
+COPY *.js .
+COPY public .
+COPY src .
 
 RUN npm -g install gatsby-cli
 RUN npm i
