@@ -7,5 +7,5 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN npm install
 
 EXPOSE 3000
-
+RUN ls
 CMD ["npm", "start"]
