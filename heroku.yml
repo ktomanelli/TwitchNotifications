@@ -2,3 +2,5 @@ build:
   docker:
     web: ./frontend/Dockerfile.web
     api: ./backend/Dockerfile.web
+  config:
+    GATSBY_FRONTEND_URL: $GATSBY_FRONTEND_URL
