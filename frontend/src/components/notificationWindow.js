@@ -36,7 +36,7 @@ const NotificationWindow = (props) => {
     },[queue, animationRunning])
 
     const initTwitchSub = (id) => {
-        fetch(`https://api.kylefrominternet.stream/twitch/webhook/${id}`)
+        fetch(`${process.env.FRONTEND_URL}/api/twitch/webhook/${id}`)
         .then(data=>{
             if(data.status === 200 || data.status === 409){
                 console.log('resp',data.data)

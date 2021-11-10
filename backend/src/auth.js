@@ -2,11 +2,11 @@ const axios = require('axios');
 const crypto = require('crypto');
 const Client = require('./models/Client');
 require('dotenv').config();
-
+const frontendUrl = process.env.FRONTEND_URL
 const baseUrl = 'https://id.twitch.tv/oauth2';
-const redirectUrl = 'https://kylefrominternet.stream/auth';
+const redirectUrl = `${frontendUrl}/auth`;
 const url = `
-https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=https://kylefrominternet.stream/auth&scope=user_read
+https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=${frontendUrl}/auth&scope=user_read
 `;
 
 const getAppToken = async () =>

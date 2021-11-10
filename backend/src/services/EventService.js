@@ -66,7 +66,7 @@ class EventService {
         },
         transport: {
           method: 'webhook',
-          callback: 'https://api.kylefrominternet.stream/twitch/webhook',
+          callback: `${process.env.FRONTEND_URL}/api/twitch/webhook`,
           secret: process.env.WEBHOOK_SECRET,
         },
       },

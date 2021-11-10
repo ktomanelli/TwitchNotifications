@@ -9,7 +9,7 @@ const Auth = (props) => {
 
     useEffect(()=>{
         if(code){
-            fetch('https://api.kylefrominternet.stream/auth',{
+            fetch(`${process.env.FRONTEND_URL}/api/auth`,{
                 method:'POST',
                 headers:{
                     'content-type':'application/json',
@@ -30,7 +30,7 @@ const Auth = (props) => {
                 } else navigate('/tools')
             })
         }else{
-            let redirectPath = 'https://kylefrominternet.stream/auth'
+            let redirectPath = `${process.env.FRONTEND_URL}/auth`
             if(props.location.state?.nextPath) {
                 redirectPath+=props.location.state.nextPath
             }
