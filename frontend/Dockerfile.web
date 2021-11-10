@@ -1,0 +1,16 @@
+FROM node:14
+
+WORKDIR /app
+
+COPY frontend/package.json .
+COPY frontend/*.js .
+COPY frontend/public .
+COPY frontend/src .
+
+RUN npm -g install gatsby-cli
+RUN npm i
+RUN npm build
+
+EXPOSE 9000
+
+CMD ["gatsby","serve","-H","0.0.0.0"]

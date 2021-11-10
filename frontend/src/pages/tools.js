@@ -1,13 +1,15 @@
 import { Link } from "gatsby";
 import { navigate } from "gatsby-link";
-import * as React from "react"
-import { useEffect, useContext } from "react"
+import React, {useState, useEffect, useContext} from "react"
 import Layout from "../components/layout"
 import {GlobalStateContext} from '../context/GlobalContextProvider';
 const Tools = (props) => {
   const state = useContext(GlobalStateContext)
   const isAuthenticated = state.client.user ? true: false
-
+  const [isBrowser,setIsBrowser] = useState(false);
+  useEffect(()=>{
+    setIsBrowser(true)
+  },[])
   return <Layout>
     {isAuthenticated ?
     <div id='tools'>
@@ -15,7 +17,7 @@ const Tools = (props) => {
       <Link to='/notifications'>Notifications</Link>
     </div>
      :
-      navigate('/auth')
+      isBrowser? navigate('/auth') : null
     }
   </Layout>
 
