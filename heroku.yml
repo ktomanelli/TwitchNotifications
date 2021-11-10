@@ -1,4 +1,4 @@
 build:
   docker:
-    backend: ./backend/Dockerfile.web
-    frontend: ./frontend/Dockerfile.web
+    web: ./frontend/Dockerfile.web
+    api: ./backend/Dockerfile.web
