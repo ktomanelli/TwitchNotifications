@@ -13,14 +13,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Setup and Build
+    - name: Setup Node
       working-directory: ./frontend
       uses: actions/setup-node@master
       with:
         node-version: 10.x
+    
+    - name: Build App 
       run: |
-            npm install
-            npm run build
+          npm install
+          npm run build
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
