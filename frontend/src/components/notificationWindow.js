@@ -36,7 +36,7 @@ const NotificationWindow = (props) => {
     },[queue, animationRunning])
 
     const initTwitchSub = (id) => {
-        fetch(`${process.env.BACKEND_URL}/twitch/webhook/${id}`)
+        fetch(`http://localhost:3000/twitch/webhook/${id}`)
         .then(data=>{
             if(data.status === 200 || data.status === 409){
                 console.log('resp',data.data)

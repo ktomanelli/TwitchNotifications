@@ -9,7 +9,7 @@ const Auth = (props) => {
 
     useEffect(()=>{
         if(code){
-            fetch(`${process.env.BACKEND_URL}/auth`,{
+            fetch(`http://localhost:3000/auth`,{
                 method:'POST',
                 headers:{
                     'content-type':'application/json',
