@@ -9,6 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env: 
+      GATSBY_BACKEND_URL: https://kylefrominternet.herokuapp.com
     steps:
     - name: Checkout
       uses: actions/checkout@v1
