@@ -36,7 +36,7 @@ const NotificationWindow = (props) => {
     },[queue, animationRunning])
 
     const initTwitchSub = (id) => {
-        fetch(`${process.env.GATSBY_FRONTEND_URL}/api/twitch/webhook/${id}`)
+        fetch(`${process.env.BACKEND_URL}/twitch/webhook/${id}`)
         .then(data=>{
             if(data.status === 200 || data.status === 409){
                 console.log('resp',data.data)
@@ -69,7 +69,7 @@ const NotificationWindow = (props) => {
 
     const initSSE = (id) => {
         const uuid = uuidv4();
-        const sse = new EventSource(`${process.env.GATSBY_FRONTEND_URL}/api/event/${id}/${uuid}`);
+        const sse = new EventSource(`${process.env.BACKEND_URL}/event/${id}/${uuid}`);
         const maxReconnectTries = 3
         let reconnectAttempts = 0
 

@@ -66,7 +66,7 @@ class EventService {
         },
         transport: {
           method: 'webhook',
-          callback: `${process.env.GATSBY_FRONTEND_URL}/api/twitch/webhook`,
+          callback: `${process.env.BACKEND_URL}/twitch/webhook`,
           secret: process.env.WEBHOOK_SECRET,
         },
       },

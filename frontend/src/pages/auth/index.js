@@ -9,7 +9,7 @@ const Auth = (props) => {
 
     useEffect(()=>{
         if(code){
-            fetch(`${process.env.GATSBY_FRONTEND_URL}/api/auth`,{
+            fetch(`${process.env.BACKEND_URL}/auth`,{
                 method:'POST',
                 headers:{
                     'content-type':'application/json',
