@@ -8,7 +8,7 @@ const Auth = (props) => {
     const state = useContext(GlobalStateContext)
 
     useEffect(()=>{
-        console.log(code)
+        if(window) console.log(window.location.href);
         if(code){
             fetch(`${process.env.GATSBY_BACKEND_URL}/auth`,{
                 method:'POST',
