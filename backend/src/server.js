@@ -146,7 +146,6 @@ app.post('/auth', async (req, res) => {
           })
 
         })
-
         res.status(200).json({client})
       } catch (e) {
         console.log(e);
