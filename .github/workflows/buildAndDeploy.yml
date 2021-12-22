@@ -34,7 +34,7 @@ jobs:
         aws-region: us-east-1
 
     - name: Deploy static site to S3 bucket
-      run: aws s3 sync ./frontend/public/ s3://kylefrominternet --delete
+      run: aws s3 sync ./frontend/public/ s3://kylefrominternet.stream --delete
 
     - name: Deploy to Heroku
       uses: akhileshns/heroku-deploy@v3.12.12
