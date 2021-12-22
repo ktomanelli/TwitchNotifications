@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       GATSBY_BACKEND_URL: https://kylefrominternet.herokuapp.com
+      GATSBY_FRONTEND_URL: https://kylefrominternet.stream
     steps:
     - name: Checkout
       uses: actions/checkout@v1
