@@ -8,6 +8,7 @@ const Auth = (props) => {
     const state = useContext(GlobalStateContext)
 
     useEffect(()=>{
+        console.log(code)
         if(code){
             fetch(`${process.env.GATSBY_BACKEND_URL}/auth`,{
                 method:'POST',
@@ -30,6 +31,7 @@ const Auth = (props) => {
                 } else navigate('/tools')
             })
         }else{
+            console
             let redirectPath = `${process.env.GATSBY_FRONTEND_URL}/auth`
             if(props.location.state?.nextPath) {
                 redirectPath+=props.location.state.nextPath
