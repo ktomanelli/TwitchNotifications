@@ -13,7 +13,7 @@ class EventController {
 
     if (client) {
       const headers = {
-        'Content-Type': 'text/event-stream',
+        'Content-Type': 'text/event-stream; charset=utf-8',
         Connection: 'keep-alive',
         'Cache-Control': 'no-cache',
         'Access-Control-Allow-Origin':'https://kylefrominternet.stream',
@@ -32,7 +32,7 @@ class EventController {
       const keepAliveinterval = setInterval(() => {
         console.log('sending keepalive message')
         res.write(`data: ${JSON.stringify({type: 'keepalive'})}\n\n`);
-      }, 55 * 1000);
+      }, 30 * 1000);
 
       req.on('close', async () => {
         const {uuid} = req.params
