@@ -69,7 +69,7 @@ const NotificationWindow = (props) => {
 
     const initSSE = (id) => {
         const uuid = uuidv4();
-        const sse = new EventSource(`${process.env.GATSBY_BACKEND_URL}/event/${id}/${uuid}`);
+        const sse = new EventSource(`${process.env.GATSBY_BACKEND_URL}/event/${id}/${uuid}`, {withCredentials: true});
         const maxReconnectTries = 3
         let reconnectAttempts = 0
 
