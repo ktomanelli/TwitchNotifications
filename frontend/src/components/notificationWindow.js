@@ -77,10 +77,12 @@ const NotificationWindow = (props) => {
             console.log(event);
             if(event.type === 'close') sse.close()
             else {
-                setAudioPlaying(true);
                 const message = JSON.parse(event.data).type;
-                console.log(message)
-                setQueue([...queue, message])
+                if(message !== 'keepalive') {
+                    setAudioPlaying(true);
+                    console.log(message);
+                    setQueue([...queue, message]);
+                }
             }
         };
         sse.onerror = () => {
