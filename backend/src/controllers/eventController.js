@@ -32,7 +32,7 @@ class EventController {
       const keepAliveinterval = setInterval(() => {
         console.log('sending keepalive message')
         res.write(`data: ${JSON.stringify({type: 'keepalive'})}\n\n`);
-      }, 60 * 1000);
+      }, 55 * 1000);
 
       req.on('close', async () => {
         const {uuid} = req.params
