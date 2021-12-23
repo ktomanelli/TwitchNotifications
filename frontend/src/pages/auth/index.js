@@ -8,8 +8,8 @@ const Auth = (props) => {
     const state = useContext(GlobalStateContext)
 
     useEffect(()=>{
-        if(window) console.log(window.location.href);
         if(code){
+            console.log('received code')
             fetch(`${process.env.GATSBY_BACKEND_URL}/auth`,{
                 method:'POST',
                 headers:{
@@ -31,12 +31,12 @@ const Auth = (props) => {
                 } else navigate('/tools')
             })
         }else{
-            console
+            console.log('did not receive code')
             let redirectPath = `${process.env.GATSBY_FRONTEND_URL}/auth`
             if(props.location.state?.nextPath) {
                 redirectPath+=props.location.state.nextPath
             }
-            window.location.replace(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=${redirectPath}&scope=user_read`);
+            // window.location.replace(`https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=${redirectPath}&scope=user_read`);
         }
     },[code])
     
