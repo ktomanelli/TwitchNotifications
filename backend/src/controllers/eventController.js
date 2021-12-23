@@ -28,6 +28,7 @@ class EventController {
       }
 
       const keepAliveinterval = setInterval(() => {
+        console.log('sending keepalive message')
         res.write(JSON.stringify({type: 'keepalive'}));
         res.flush();
       }, 60 * 1000);
