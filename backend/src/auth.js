@@ -4,7 +4,7 @@ const Client = require('./models/Client');
 require('dotenv').config();
 const frontendUrl = process.env.GATSBY_FRONTEND_URL
 const baseUrl = 'https://id.twitch.tv/oauth2';
-const redirectUrl = `${frontendUrl}/auth`;
+const redirectUrl = `${frontendUrl}/auth/`;
 const url = `
 https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=86bqvqw8f722hn3refzoqntfobzc5c&redirect_uri=${frontendUrl}/auth&scope=user_read
 `;
