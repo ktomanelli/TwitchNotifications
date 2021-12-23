@@ -35,9 +35,6 @@ const NotificationWindow = (props) => {
         consumeQueue();
     },[queue, animationRunning])
 
-    useEffect(()=>{
-        console.log(events)
-    });
     const initTwitchSub = (id) => {
         fetch(`${process.env.GATSBY_BACKEND_URL}/twitch/webhook/${id}`)
         .then(data=>{
@@ -77,6 +74,7 @@ const NotificationWindow = (props) => {
         let reconnectAttempts = 0
 
         sse.onmessage = event => {
+            console.log(event);
             if(event.type === 'close') sse.close()
             else {
                 setAudioPlaying(true);

@@ -27,10 +27,16 @@ class EventController {
         }
       }
 
+      const keepAliveinterval = setInterval(() => {
+        res.write(JSON.stringify({type: 'keepalive'}));
+        res.flush();
+      }, 60 * 1000);
+
       req.on('close', async () => {
         const {uuid} = req.params
         const client = this.cache.get(id);
         this.cache.closeClient(id, uuid)
+        clearInterval(keepAliveinterval);
         if(client.clients.length === 0 ){
           await this.eventService.deleteAllSubs(client.subscriptions);
         }
