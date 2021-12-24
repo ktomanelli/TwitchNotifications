@@ -85,12 +85,16 @@ const NotificationWindow = (props) => {
                 }
             }
         };
-        sse.onerror = () => {
+        sse.onerror = (eventSource, event) => {
+            console.log('ERROR:')
+            console.log(eventSource);
+            console.log(event);
             if (reconnectAttempts > maxReconnectTries) {
               sse.close();
               setSubActive(false);
               alert("Connection Broken. Too many failed retries");
             } else {
+                console.log('attempting reconnect')
               reconnectAttempts++
             }
         }
