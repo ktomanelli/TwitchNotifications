@@ -108,7 +108,6 @@ app.post('/twitch/webhook', (req, res) => {
   } else {
     const id = req.body.event.broadcaster_user_id;
     if (id) {
-      console.log(req.body)
       eventService.sendEvent(id, req.body);
     }
     console.log('received message from twitch');

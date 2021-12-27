@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env: 
-      GATSBY_BACKEND_URL: https://kylefrominternet.herokuapp.com
+      GATSBY_BACKEND_URL: https://api.kylefrominternet.stream
       GATSBY_FRONTEND_URL: https://kylefrominternet.stream
     steps:
     - name: Checkout
