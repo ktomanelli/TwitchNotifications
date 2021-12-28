@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
+import { StaticImage } from "gatsby-plugin-image"
 
 const CustomNotification = (props) => {
-    const CrtImg = styled.img`
-        position:absolute;
-        width:100vw;
-        height: 100vh;
-    `;
+
     const WhiteSquare = styled.div`
         background-color: white;
         width: 50vw;
@@ -61,7 +58,10 @@ const CustomNotification = (props) => {
     `;
     return (
         <>
-            <CrtImg src='./crt.PNG'/>
+            <StaticImage src='../images/crt.PNG'
+            style={{position:'absolute',
+                width:'100vw',
+                height: '100vh',}}/>
             <WhiteSquare />
             <CrtAffect />
             <Text>{props.message}</Text>
