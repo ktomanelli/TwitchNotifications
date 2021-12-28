@@ -127,7 +127,7 @@ const NotificationWindow = (props) => {
                 {subActive ?
                     <>
                         {animationRunning ?
-                            <div id='notify'>
+                            <div id='notify' style={animationRunning ? {transition: "all .3s ease-out"}: null}>
                                 <CustomNotification message={message}/>
                                 {/* <NotifyImg src={props.imgSrc} alt={props.imgAlt}/>
                                 <NotifySpan>{message}</NotifySpan> */}
