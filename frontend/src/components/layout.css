@@ -2,6 +2,7 @@
 
 #notify{
     font-family: "BadlyStamped";
+    transition: all .3s ease-out;
 }
 
 #notify span{
