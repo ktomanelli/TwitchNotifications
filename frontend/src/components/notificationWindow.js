@@ -3,6 +3,7 @@ import React, {useState, useContext, useEffect} from 'react'
 import { GlobalStateContext } from '../context/GlobalContextProvider';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import CustomNotification from './customNotification';
 
 const NotificationWindow = (props) => {
     const [subActive, setSubActive] = useState(false);
@@ -127,8 +128,9 @@ const NotificationWindow = (props) => {
                     <>
                         {animationRunning ?
                             <div id='notify'>
-                                <NotifyImg src={props.imgSrc} alt={props.imgAlt}/>
-                                <NotifySpan>{message}</NotifySpan>
+                                <CustomNotification message={message}/>
+                                {/* <NotifyImg src={props.imgSrc} alt={props.imgAlt}/>
+                                <NotifySpan>{message}</NotifySpan> */}
                             </div>
                         :
                             null
