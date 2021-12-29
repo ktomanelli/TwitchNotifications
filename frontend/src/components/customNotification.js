@@ -189,8 +189,8 @@ const CustomNotification = (props) => {
         <>
             <StaticImage src='../images/crt.png'
             style={{position:'absolute',
-                width:'100vw',
-                height: '100vh',}}/>
+                width:'90vw',
+                height: '90vh',}}/>
             <WhiteSquare />
             <CrtAffect />
             <Text>{props.message}</Text>
