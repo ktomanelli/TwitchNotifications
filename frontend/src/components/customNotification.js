@@ -187,7 +187,7 @@ const CustomNotification = (props) => {
     `;
     return (
         <>
-            <StaticImage src='../images/crt.PNG'
+            <StaticImage src='../images/crt.png'
             style={{position:'absolute',
                 width:'100vw',
                 height: '100vh',}}/>
