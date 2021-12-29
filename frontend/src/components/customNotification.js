@@ -143,8 +143,8 @@ const CustomNotification = (props) => {
         margin: 1em;
     `;
     const CrtAffect = styled.div`
-        width: 100vw;
-        height: 100vh;
+        width: 90vw;
+        height: 90vh;
         &:before {
             content: " ";
             display: block;
