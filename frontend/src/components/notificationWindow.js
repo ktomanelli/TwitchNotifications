@@ -113,22 +113,22 @@ const NotificationWindow = (props) => {
 
     const displayMessage = (data) => {
         console.log(data.event.user_name);
-        setMessage(`${data.event.user_name} is now Following!!`);
+        setMessage({
+            user: data.event.user_name,
+            message: 'is now Following!!'
+        });
         setAnimationRunning(true)
         setTimeout(()=>{
             setAnimationRunning(false);
         }, 5000)
     }
 
-    // const img = <img id='gif' src='https://giffiles.alphacoders.com/247/2479.gif' alt='bmo gif'/>
-    // const span = <span id='message'>{message}</span>
-
     return <div>
                 {subActive ?
                     <>
                         {animationRunning ?
                             <div id='notify' style={{transition: "all .3s ease-out"}}>
-                                <CustomNotification message={message}/>
+                                <CustomNotification user={message.user} message={message.message}/>
                                 {/* <NotifyImg src={props.imgSrc} alt={props.imgAlt}/>
                                 <NotifySpan>{message}</NotifySpan> */}
                             </div>
