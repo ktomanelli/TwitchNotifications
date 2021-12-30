@@ -25,7 +25,7 @@ const CustomNotification = (props) => {
     return (
         <iframe 
             src={`https://ktomanelli.github.io/crtMessage/?message=${props.message}&user=${props.user}`}
-            style={{width:width, height:height, overflow:'hidden', pointerEvents:none}}
+            style={{width:width, height:height, overflow:'hidden', pointerEvents:'none'}}
         ></iframe>
     )
 }
