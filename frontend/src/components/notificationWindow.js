@@ -52,22 +52,6 @@ const NotificationWindow = (props) => {
         })
     }
 
-    const NotifyImg = styled.img`
-        margin: auto;
-        position: relative;
-        width: 80vw;
-        height: 80vh;
-    `;
-    const NotifySpan = styled.span`
-        font-family: "VintageOne";
-        width:100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        font-size: 4em;
-        text-align: center;
-    `;
-
     const initSSE = (id) => {
         const uuid = uuidv4();
         const sse = new EventSource(`${process.env.GATSBY_BACKEND_URL}/event/${id}/${uuid}`, {withCredentials: true});
