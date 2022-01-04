@@ -46,6 +46,7 @@ const NotificationWindow = (props) => {
                 const htmlAudio = new Audio(props.audioSrc);
 
                 htmlAudio.addEventListener('timeupdate', () => {
+                    console.log(audio.currentTime)
                     if (audio.currentTime >= 0.02) {
                         audio.pause();
                     }   
