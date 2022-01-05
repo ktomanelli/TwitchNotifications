@@ -10,7 +10,7 @@ const Notifications = () => {
     const [id, setId] = useQueryParam('id', StringParam);
     const [imgSrc, setImgSrc] = useState('https://c.tenor.com/FYcn40o1ZYgAAAAi/zombie-bloody.gif');
     const [imgAlt, setImgAlt] = useState('zombie gif');
-    const [audioSrc, setAudioSrc] = useState('https://ia803109.us.archive.org/12/items/WhatTheFuckIsUpKyle.128kbitAAC/What%20the%20fuck%20is%20up%20Kyle.%20%28128kbit_AAC%29.mp3');
+    const [audioSrc, setAudioSrc] = useState('../sounds/wtfiuk.mp3');
 
     const generateUrl = () => {
         return null;   
