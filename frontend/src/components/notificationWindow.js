@@ -45,13 +45,6 @@ const NotificationWindow = (props) => {
                 initSSE(id);
                 const htmlAudio = new Audio(props.audioSrc);
 
-                htmlAudio.addEventListener('timeupdate', () => {
-                    console.log(audio.currentTime)
-                    if (audio.currentTime >= 0.02) {
-                        audio.pause();
-                    }   
-                }, false);
-
                 htmlAudio.addEventListener('ended', () => setAudioPlaying(false));
                 setAudio(htmlAudio);
             } else{

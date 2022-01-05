@@ -2,7 +2,7 @@ const axios = require('axios');
 const crypto = require('crypto');
 const Client = require('./models/Client');
 require('dotenv').config();
-const frontendUrl = process.env.GATSBY_FRONTEND_URL
+const frontendUrl = process.env.FRONTEND_URL
 const baseUrl = 'https://id.twitch.tv/oauth2';
 const redirectUrl = `${frontendUrl}/auth/`;
 const url = `

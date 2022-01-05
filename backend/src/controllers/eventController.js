@@ -16,7 +16,7 @@ class EventController {
         'Content-Type': 'text/event-stream; charset=utf-8',
         Connection: 'keep-alive',
         'Cache-Control': 'no-cache',
-        'Access-Control-Allow-Origin':'https://kylefrominternet.stream',
+        'Access-Control-Allow-Origin':process.env.FRONTEND_URL,
         'Access-Control-Allow-Credentials': true
       };
       res.writeHead(200, headers);

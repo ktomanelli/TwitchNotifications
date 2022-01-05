@@ -5,12 +5,13 @@ import NotificationSettings from '../components/notificationSettings';
 import NotificationWindow from '../components/notificationWindow';
 import styled from 'styled-components';
 import { useQueryParam, StringParam } from "use-query-params";
+import wtfiuk from "../sounds/wtfiuk.mp3";
 
 const Notifications = () => {
     const [id, setId] = useQueryParam('id', StringParam);
     const [imgSrc, setImgSrc] = useState('https://c.tenor.com/FYcn40o1ZYgAAAAi/zombie-bloody.gif');
     const [imgAlt, setImgAlt] = useState('zombie gif');
-    const [audioSrc, setAudioSrc] = useState('/static/wtfiuk.mp3');
+    const [audioSrc, setAudioSrc] = useState(wtfiuk);
 
     const generateUrl = () => {
         return null;   
